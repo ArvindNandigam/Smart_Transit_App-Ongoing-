@@ -6,8 +6,13 @@ A **Smart Bus Transit Management System** developed using **Flutter** as part of
 
 ---
 
+## Live Demo
+Check out the **frontend in action**: [Smart Transit Web](https://smarttransitweb.netlify.app/)
+
+---
+
 ## Features (Frontend Only)
-- **User Interface:** Fully designed with Flutter for mobile devices.  
+- **User Interface:** Fully designed with Flutter for mobile and web.  
 - **Login Screens:** OTP input and phone number UI are implemented (frontend only).  
 - **Route & Schedule Screens:** Static UI layouts for buses and routes.  
 - **Bottom Navigation:** Works across Home, Routes, Wallet, and Profile screens.  
@@ -28,7 +33,7 @@ A **Smart Bus Transit Management System** developed using **Flutter** as part of
 ### Prerequisites
 - Flutter SDK installed (latest stable)
 - Android Studio / VS Code setup
-- Device or emulator for testing
+- Device, emulator, or browser for testing
 
 ### Installation
 ```bash
