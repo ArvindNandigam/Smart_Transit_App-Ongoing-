@@ -1,0 +1,154 @@
+// lib/flows/ticket_purchase_flow.dart
+
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+// Import your modal and screen widgets
+import '../modals/destination_entry_modal.dart';
+import '../screens/fare_confirmation_screen.dart';
+import '../screens/digital_ticket_screen.dart';
+
+// --- Data Models (can be moved to a separate models file) ---
+
+class BusInfo {
+  final String number;
+  final String currentStop;
+  final String route;
+
+  BusInfo({required this.number, required this.currentStop, required this.route});
+}
+
+class TripDetails {
+  final String busNumber;
+  final String startStop;
+  final String destinationStop;
+  final double fare;
+  final String userName;
+  final String? ticketId;
+  final DateTime? purchaseTime;
+
+  TripDetails({
+    required this.busNumber,
+    required this.startStop,
+    required this.destinationStop,
+    required this.fare,
+    required this.userName,
+    this.ticketId,
+    this.purchaseTime,
+  });
+
+  // Helper to create a new instance with updated values
+  TripDetails copyWith({
+    String? ticketId,
+    DateTime? purchaseTime,
+  }) {
+    return TripDetails(
+      busNumber: busNumber,
+      startStop: startStop,
+      destinationStop: destinationStop,
+      fare: fare,
+      userName: userName,
+      ticketId: ticketId ?? this.ticketId,
+      purchaseTime: purchaseTime ?? this.purchaseTime,
+    );
+  }
+}
+
+// --- Main Flow Widget ---
+
+enum TicketFlowStep { destination, fare, ticket }
+
+class TicketPurchaseFlow extends StatefulWidget {
+  final VoidCallback onClose;
+  final BusInfo busInfo;
+
+  const TicketPurchaseFlow({
+    super.key,
+    required this.onClose,
+    required this.busInfo,
+  });
+
+  @override
+  State<TicketPurchaseFlow> createState() => _TicketPurchaseFlowState();
+}
+
+class _TicketPurchaseFlowState extends State<TicketPurchaseFlow> {
+  TicketFlowStep _currentStep = TicketFlowStep.destination;
+  TripDetails? _tripDetails;
+
+  // --- State Transition Logic ---
+
+  void _handleDestinationSelect(String destination) {
+    // Mock fare calculation
+    final fare = (Random().nextDouble() * 5) + 8;
+    
+    setState(() {
+      _tripDetails = TripDetails(
+        busNumber: widget.busInfo.number,
+        startStop: widget.busInfo.currentStop,
+        destinationStop: destination,
+        fare: fare,
+        userName: 'John Doe', // This would come from user auth
+      );
+      _currentStep = TicketFlowStep.fare;
+    });
+  }
+
+  void _handlePaymentConfirm() {
+    if (_tripDetails == null) return;
+
+    // Generate ticket ID and purchase time
+    final ticketId = 'TKT${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
+
+    setState(() {
+      _tripDetails = _tripDetails!.copyWith(
+        ticketId: ticketId,
+        purchaseTime: DateTime.now(),
+      );
+      _currentStep = TicketFlowStep.ticket;
+    });
+  }
+  
+  void _handleBackToDestination() {
+    setState(() {
+      _currentStep = TicketFlowStep.destination;
+    });
+  }
+
+  void _handleClose() {
+    // Reset state before closing
+    setState(() {
+      _currentStep = TicketFlowStep.destination;
+      _tripDetails = null;
+    });
+    widget.onClose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // This widget is designed to be an overlay, so it builds a stack
+    // of the different steps in the flow.
+    
+    switch (_currentStep) {
+      case TicketFlowStep.destination:
+        return DestinationEntryModal(
+          busInfo: widget.busInfo,
+          onDestinationSelect: _handleDestinationSelect,
+          onClose: _handleClose,
+        );
+      case TicketFlowStep.fare:
+        return FareConfirmationScreen(
+          tripDetails: _tripDetails!,
+          onConfirmPayment: _handlePaymentConfirm,
+          onBack: _handleBackToDestination,
+          onClose: _handleClose,
+        );
+      case TicketFlowStep.ticket:
+        return DigitalTicketScreen(
+          tripDetails: _tripDetails!,
+          onClose: _handleClose,
+        );
+    }
+  }
+}

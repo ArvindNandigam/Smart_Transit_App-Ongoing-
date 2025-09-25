@@ -1,0 +1,83 @@
+name: smart_transit
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- CORE & STATE MANAGEMENT ---
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
+
+  # --- UI & COMPONENTS ---
+  cupertino_icons: ^1.0.8
+  lucide_flutter: ^0.544.0
+  fluttertoast: ^8.2.6
+  table_calendar: ^3.1.2
+  carousel_slider: ^4.2.1
+  qr_flutter: ^4.1.0
+  pinput: ^4.0.0
+  popover: ^0.2.2
+  shimmer: ^3.0.0
+  multi_split_view: ^2.3.0
+  super_context_menu: ^0.7.0
+  fl_chart: ^0.68.0
+
+  # --- FORMS ---
+  flutter_form_builder: ^9.3.0
+  form_builder_validators: ^10.0.1
+  popup_menu: ^2.1.0
+  super_native_extensions: ^0.7.3
+  intl_phone_field: ^3.2.0
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+  http: ^1.5.0
+  # Note: 'intl' is intentionally omitted here.
+  # It will be included automatically by other packages at the correct version.
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.13.1 
+  flutter_native_splash: ^2.4.0
+
+# --- THIS IS THE FIX ---
+# This forces the app to use the version of 'intl' required by the Flutter SDK,
+# resolving the conflict caused by other packages.
+dependency_overrides:
+  intl: 0.20.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+
+  # Add this entire block at the end of your pubspec.yaml
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  # IMPORTANT: Change this to the actual path of your logo file!
+  image_path: "assets/images/your_logo.png"
+  min_sdk_android: 21 # This is required for adaptive icons
+
+# Add this entire block at the end of your pubspec.yaml
+flutter_native_splash:
+  # This color will be the background of your splash screen.
+  # We'll use the dark slate color from your app's theme.
+  color: "#0F172A"
+
+  # IMPORTANT: Change this to the actual path of your logo file!
+  image: assets/images/your_logo.png
+
+  # Android 12+ specific settings
+  android_12:
+    image: assets/images/your_logo.png
+    color: "#0F172A"
+    icon_background_color: "#1a202c"
