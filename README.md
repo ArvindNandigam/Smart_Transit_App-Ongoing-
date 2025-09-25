@@ -1,16 +1,45 @@
-# smart_transit
+# Smart Bus Transit (SIH Project)
 
-A new Flutter project.
+A **Smart Bus Transit Management System** developed using **Flutter** as part of the Smart India Hackathon (SIH).  
+The project focuses on building an **efficient, real-time bus tracking and management solution** to improve public transportation accessibility, reliability, and user experience.
+
+---
+
+## Features
+- **Real-time Bus Tracking** – Live GPS-based bus location updates.  
+- **Schedule & Route Management** – View routes, stops, and bus timings.  
+- **User-Friendly Interface** – Built with Flutter for cross-platform mobile apps.  
+- **Secure Login & Authentication** – Manage access for students, staff, and administrators.  
+- **Analytics Dashboard** – Track usage, optimize routes, and monitor bus occupancy (future scope).  
+- **Scalable Backend** – Ready for integration with cloud-based services and IoT hardware.
+
+---
+
+## Tech Stack
+- **Frontend:** Flutter, Dart  
+- **Backend:** (Planned/Integrating – Firebase / REST APIs / Cloud backend)  
+- **Database:** Firestore / SQL (as per implementation)  
+- **Other Tools:** Android Studio, VS Code, GitHub  
+
+---
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
+- Flutter SDK installed (latest stable)
+- Android Studio / VS Code setup
+- A device/emulator for testing
 
-A few resources to get you started if this is your first Flutter project:
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/<your-username>/Smart_Bus_Transit_SIH.git
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Navigate to project
+cd Smart_Bus_Transit_SIH/smart_bus_transit
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Get dependencies
+flutter pub get
+
+# Run the app
+flutter run
